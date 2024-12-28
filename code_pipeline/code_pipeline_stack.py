@@ -12,8 +12,6 @@ class CodePipelineStack(Stack):
 
         # The code that defines your stack goes here
 
-        # example resource
-        # queue = sqs.Queue(
-        #     self, "CodePipelineQueue",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
+        bucket = s3.Bucket(self, "MyfirstBucket", versioned=True,
+                           bucket_name="demo-bucket-beyond-the-cloud-98979867hhh",
+                           block_public_access=s3.BlockPublicAccess.BLOCK_ALL)
