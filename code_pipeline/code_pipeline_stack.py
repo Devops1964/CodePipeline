@@ -15,5 +15,5 @@ class CodePipelineStack(Stack):
         # The code that defines your stack goes here
 
         bucket = s3.Bucket(self, "MyfirstBucket", versioned=True,
-                           bucket_name="demo-bucket-beyond-the-cloud-98979867hhh",
+                           bucket_name="rag-1258972",
                            block_public_access=s3.BlockPublicAccess.BLOCK_ALL)
