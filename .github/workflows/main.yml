@@ -45,9 +45,9 @@ jobs:
         run: cdk bootstrap
         working-directory: .
 
-     #  - name: CDK Deploy
-        # run: cdk deploy --require-approval never
-        # working-directory: .
+      - name: CDK Deploy
+          run: cdk deploy --require-approval never
+          working-directory: .
         
       - name: CDK Destroy
         run: cdk destroy --force
