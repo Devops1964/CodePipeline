@@ -3,7 +3,7 @@ name: Deploy AWS CDK
 # Controls when the action will run. 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   #pull_request:
     #branches: [ main ]
 
@@ -23,7 +23,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
-          role-to-assume:arn:aws:iam::529088253053:role/gitHubRole
+          role-to-assume: arn:aws:iam::529088253053:role/gitHubRole
           role-session-name: samplerolesession
 
       - name: install npm
@@ -51,4 +51,3 @@ jobs:
       - name: CDK Destroy
         run: cdk destroy --force
         working-directory: .
-   
