@@ -37,15 +37,17 @@ jobs:
         working-directory: .
 
       - name: CDK Synth
-        run: cdk synth
+        run: cdk synth --context aws_account=529088253053 \
+           --context aws_region=eu-central-1
         working-directory: .
               
       - name: CDK bootstrap
-        run: cdk bootstrap
+        run: CDK bootstrap
         working-directory: .
 
       - name: CDK Deploy
-        run: cdk deploy --require-approval never
+        run: cdk deploy --context aws_account=529088253053 \
+           --context aws_region=eu-central-1
         working-directory: .
         
     #  - name: CDK Destroy

@@ -1,19 +1,18 @@
 from aws_cdk import (
-    Duration,
-    Stack,
-    aws_sqs as sqs,
-    aws_s3 as s3,
-    aws_lambda as lambda_function
+    core,
+    aws_ecs as ecs,
+    aws_ec2 as ec2
 )
-from constructs import Construct
 
-class CodePipelineStack(Stack):
+class CicdVpcEcsStack(core.Stack):
+    def __init__(self, scope, id, **kwargs) -> None:
+        super().__init__(scope, id, **kwargs)
 
-    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
-        super().__init__(scope, construct_id, **kwargs)
+        vpc_nonprod = ec2.Vpc(self, "cicd-vpc-nonprod", max_azs=2)
+        vpc_prod = ec2.Vpc(self, "cicd-prod", max_azs=2)
 
-        # The code that defines your stack goes here
+        ecs.Cluster(self, "cicd-ecs-nonprod", capacity_providers=["FARGATE"],cluster_name="cicd-ecs-nonprod",vpc=vpc_nonprod)
+        ecs.Cluster(self, "cicd-ecs-prod", capacity_providers=["FARGATE"],cluster_name="cicd-ecs-prod",vpc=vpc_prod)
+      
 
-        bucket = s3.Bucket(self, "MyfirstBucket", versioned=True,
-                           bucket_name="rag-1258972",
-                           block_public_access=s3.BlockPublicAccess.BLOCK_ALL)
+

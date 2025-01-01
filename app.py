@@ -1,28 +1,16 @@
 #!/usr/bin/env python3
-import os
 
-import aws_cdk as cdk
+from aws_cdk import core
 
-from code_pipeline.code_pipeline_stack import CodePipelineStack
+from cicdvpcecs.cicdvpcecs_stack import CicdVpcEcsStack
 
+app = core.App()
 
-app = cdk.App()
-CodePipelineStack(app, "CodePipelineStack",
-    # If you don't specify 'env', this stack will be environment-agnostic.
-    # Account/Region-dependent features and context lookups will not work,
-    # but a single synthesized template can be deployed anywhere.
+aws_account = app.node.try_get_context("aws_account")
+aws_region = app.node.try_get_context("aws_region")
 
-    # Uncomment the next line to specialize this stack for the AWS Account
-    # and Region that are implied by the current CLI configuration.
+env = core.Environment(account=aws_account, region=aws_region)
 
-    #env=cdk.Environment(account=os.getenv('CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION')),
-
-    # Uncomment the next line if you know exactly what Account and Region you
-    # want to deploy the stack to. */
-
-    #env=cdk.Environment(account='123456789012', region='us-east-1'),
-
-    # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
-    )
+CicdVpcEcsStack(app,"cicd-vpc-ecs", env=env)
 
 app.synth()
